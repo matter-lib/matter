@@ -4,7 +4,7 @@
 ## Sections
 
 - Code Style Choices
-  - Intendation
+  - Indentation
   - Curly Brackets
   - Pointers
 - Documentation
@@ -14,7 +14,7 @@
 
 ## Code Style Choices
 
-### Intendation
+### Indentation
 
 All lines are indented with 4 spaces (not a single tab).
 
@@ -70,7 +70,7 @@ Documentation comments are strict as a document generator will be used. We are a
 
 - `@param` refers to a function parameter, it is followed by the parameter name and a description, e.g. `@param <name> <description>`.
 - `@return` refers to what a function returns, it only needs to be followed with a description, e.g. `@return <description>`.
-If there is no return value then it can be ommited.
+If there is no return value then it can be omitted.
 
 ### Variables
 
@@ -85,7 +85,7 @@ int age = 18
 
 Functions require all parameters and what it returns to be documented, this uses `@param` and `@return`. `@param`s should be on a new line below each other and `@return` should be seperated by `@param` by an empty line.
 
-If the function has no parameters then `@param` can be ommited. As can `@return` if the function doesn't return a value.
+If the function has no parameters then `@param` can be omitted. As can `@return` if the function doesn't return a value.
 
 ```
 /**
