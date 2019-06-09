@@ -10,6 +10,7 @@
   - Class Initializing
   - License
   - Header Files
+  - Namespace
 - Documentation
   - Variables
   - Functions
@@ -92,6 +93,10 @@ public:
     int age;
 }
 ```
+
+### Namespace
+
+`using namespace <example>` is forbidden. Please use the namespace at the start of the function.
 
 ## Documentation
 
