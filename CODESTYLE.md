@@ -96,7 +96,7 @@ public:
 
 ### Namespace
 
-`using namespace <example>` is forbidden. Please use the namespace at the start of the function.
+`using namespace <example>` is forbidden. Please use the namespace at the start of the function, e.g. `std::count << "Matter"`.
 
 ## Documentation
 
