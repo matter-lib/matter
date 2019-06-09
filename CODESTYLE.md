@@ -7,6 +7,9 @@
   - Indentation
   - Curly Brackets
   - Pointers
+  - Class Initializing
+  - License
+  - Header Files
 - Documentation
   - Variables
   - Functions
@@ -49,6 +52,46 @@ class Cat
 ### Pointers
 
 The `*` of a pointer sits a space after the type, e.g. `char *name` or `Point *`.
+
+### Class Initializing
+
+Class initializing should **only** be done using `Person p(18, "Matter")`. All other methods (e.g. `Person p = new Person(18, "Matter"))` are forbidden.
+
+```
+Person p(18, "Matter")
+```
+
+### License
+
+The top of every file should contain the license followed by a new line. The license can be found in `LICENSE.md` but it recommended that you copy it from an existing file, e.g. `src/main.cpp`.
+
+### Header Files
+
+#### Header Guards
+
+Header guards are mandatory. The `#define` variable is created using the path of that header file within `include`. For example `include/ui/point.h` would become `#define UI_POINT_H`. If a file sits in the root of `include/`, such as `include/units.h`, then it would be `UNITS_H`.
+
+If you are unsure how to create a header guard then refer to another header file within the project.
+
+#### Functions
+
+When documenting functions you should add the name of parameter next to the type using `/* name */` syntax. This also applies to class constructors.
+
+```
+int add(int /* x */, int /* y */);
+```
+
+#### Classes
+
+`public:` should sit at the same indentation level as the class itself.
+
+```
+class Person
+{
+public:
+    int age;
+}
+```
 
 ## Documentation
 
