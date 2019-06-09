@@ -20,39 +20,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef UNITS_H
-#define UNITS_H
+#include "../include/color.h"
 
-#include <SDL2/SDL.h>
+// Color
 
-class Point
+Color::Color() { }
+
+Color::Color(int r, int g, int b, int a)
 {
-public:
-    int x, y;
+    this->r = r;
+    this->g = g;
+    this->b = b;
+    this->a = a;
+}
 
-    Point();
-    Point(int x, int y);
-};
-
-class Size
+/**
+ * Convert from a Matter::Color to an SDL_Color.
+ * 
+ * @return An SDL_Color
+ */
+SDL_Color Color::toSDLColor()
 {
-public:
-    int w, h;
+    SDL_Color color;
 
-    Size();
-    Size(int w, int h);
-};
+    color.r = this->r;
+    color.g = this->g;
+    color.b = this->b;
+    color.a = this->a;
 
-class Rect
-{
-public:
-    Point *point;
-    Size *size;
-
-    Rect();
-    Rect(Point *, Size *);
-
-    SDL_Rect toSDLRect();
-};
-
-#endif
+    return color;
+}
