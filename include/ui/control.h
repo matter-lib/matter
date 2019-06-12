@@ -80,18 +80,20 @@ public:
     /// The foreground color to use when disabled
     Color disabledForegroundColor;
 
+    // Getter methods
     Rect getFrame();
     ControlState getControlState();
 
     Color getBackgroundColor(ControlState state);
     Color getBackgroundColor();
 
+    void invalidateContent();
 
-    // Virtual methods
     virtual void initialize(SDL_Renderer *context);
     virtual void render(SDL_Renderer *context);
     virtual void processEvents(SDL_Renderer *context);
 private:
+    bool m_invalidatedContent;
     ControlState m_state;
 };
 
