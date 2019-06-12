@@ -23,6 +23,36 @@
 #include "../../include/ui/control.h"
 
 /**
+ * Renders the control using the given renderer context.
+ * 
+ * @param context The SDL_Renderer context to render using
+ */
+void Control::render(SDL_Renderer *context)
+{
+    // Setting the background color to render
+    Color drawColor = this->getBackgroundColor();
+    
+    SDL_SetRenderDrawColor(context, 
+        drawColor.r, drawColor.g, drawColor.b, drawColor.a);
+
+    // Drawing the background
+    SDL_Rect rect = this->getFrame().toSDLRect();
+    SDL_RenderFillRect(context, &rect);
+    
+    if (m_invalidatedContent)
+    {
+        // Check whether we need to invalidate the content
+        this->initialize(context);
+        this->m_invalidatedContent = false;
+    }
+}
+
+void Control::processEvents(SDL_Renderer *context)
+{
+    
+}
+
+/**
  * Get the frame of the control. The frame contains the position
  * as well as the size of the control.
  * 
@@ -70,8 +100,11 @@ Color Control::getBackgroundColor(ControlState state)
     }
 }
 
-void Control::render(SDL_Renderer *context)
+/**
+ * Invalidate the content of the controls. This specifies to the renderer
+ * that we need to recall the `initialize` method and update the control.
+ */
+void Control::invalidateContent()
 {
-    // Render the background color
-    Color drawingColor = this->getBackgroundColor();
+    this->m_invalidatedContent = true;
 }
