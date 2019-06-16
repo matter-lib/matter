@@ -30,8 +30,7 @@ class Color
 public:
     int r, g, b, a;
 
-    Color();
-    Color(int /* r */, int /* g */, int /* b */, int /* a */);
+    Color(int r, int g, int b, int a);
 
     // Conversion methods
     SDL_Color toSDLColor();

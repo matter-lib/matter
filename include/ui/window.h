@@ -2,6 +2,7 @@
 #define UI_WINDOW_H
 
 #include <SDL2/SDL.h>
+#include "../color.h"
 #include "../units.h"
 #include "control.h"
 

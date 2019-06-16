@@ -22,6 +22,8 @@
 
 #include "../../include/ui/control.h"
 
+Control::Control() { }
+
 /**
  * Renders the control using the given renderer context.
  * 
@@ -108,3 +110,7 @@ void Control::invalidateContent()
 {
     this->m_invalidatedContent = true;
 }
+
+void Control::initialize(SDL_Renderer *context) { }
+void render(SDL_Renderer *context) { }
+void processEvents(SDL_Renderer *context) { }
