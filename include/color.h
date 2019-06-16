@@ -20,39 +20,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef UNITS_H
-#define UNITS_H
+#ifndef COLOR_H
+#define COLOR_H
 
 #include <SDL2/SDL.h>
 
-class Point
+class Color
 {
 public:
-    int x, y;
+    int r, g, b, a;
 
-    Point();
-    Point(int x, int y);
-};
+    Color(int r, int g, int b, int a);
 
-class Size
-{
-public:
-    int w, h;
-
-    Size();
-    Size(int w, int h);
-};
-
-class Rect
-{
-public:
-    Point *point;
-    Size *size;
-
-    Rect();
-    Rect(Point *, Size *);
-
-    SDL_Rect toSDLRect();
+    // Conversion methods
+    SDL_Color toSDLColor();
+    Color fromSDLColor(SDL_Color *color);
 };
 
 #endif

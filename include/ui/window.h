@@ -2,12 +2,13 @@
 #define UI_WINDOW_H
 
 #include <SDL2/SDL.h>
+#include "../color.h"
 #include "../units.h"
 #include "control.h"
 
 class Window
 {
-    Control m_rootControl;
+    Control *m_rootControl;
 
     SDL_Window *m_window;
     SDL_Renderer *m_renderer;
@@ -18,7 +19,7 @@ public:
 
     Size getSize();
 
-    void setRootController(Control);
+    void setRootControl(Control*);
     void render();
     void processEvents(SDL_Event *);
 };
