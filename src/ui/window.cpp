@@ -51,6 +51,15 @@ void Window::render()
 
 void Window::processEvents(SDL_Event *event)
 {
+    if (event->type == SDL_WINDOWEVENT)
+    {
+        if (event->window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+        {
+            this->setRootControl(m_rootControl);
+            this->m_rootControl->windowSizeChanged();
+        }
+    }
+
     this->m_rootControl->processEvents(event);
 }
 

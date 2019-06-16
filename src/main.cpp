@@ -22,13 +22,19 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "../include/ui/window.h"
+#include "../include/ui/pushbutton.h"
 
 int main()
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "SLD init error: %s\n", SDL_GetError());
+        fprintf(stderr, "SDL init error: %s\n", SDL_GetError());
+        return 1;
+    }
+    if (TTF_Init() != 0) {
+        fprintf(stderr, "TTF init error: %s\n", TTF_GetError());
         return 1;
     }
 
@@ -42,9 +48,8 @@ int main()
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     Window win = Window(window, renderer);
 
-    Control testControl = Control();
-    testControl.allowsClick = true;
-    win.setRootControl(&testControl);
+    Label btn = PushButton();
+    win.setRootControl(&btn);
 
     bool quit = false;
     while (!quit)

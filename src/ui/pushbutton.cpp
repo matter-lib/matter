@@ -21,3 +21,11 @@
  */
 
 #include "../../include/ui/pushbutton.h"
+
+PushButton::PushButton() {
+    this->setHorizontalAlignment(LabelAlignment::Center);
+    this->setVerticalAlignment(LabelAlignment::Center);
+
+    this->allowsClick = true;
+    this->setText("Button");
+}

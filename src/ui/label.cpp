@@ -21,3 +21,110 @@
  */
 
 #include "../../include/ui/label.h"
+
+LabelAlignment Label::getVerticalAlignment()
+{
+    return this->m_verticalAlignment;
+}
+LabelAlignment Label::getHorizontalAlignment()
+{
+    return this->m_horizontalAlignment;
+}
+
+void Label::setVerticalAlignment(LabelAlignment alignment) {
+    this->m_verticalAlignment = alignment;
+}
+void Label::setHorizontalAlignment(LabelAlignment alignment)
+{
+    this->m_horizontalAlignment = alignment;
+}
+
+std::string Label::getText()
+{
+    return this->m_text;
+}
+void Label::setText(std::string text)
+{
+    this->m_text = text;
+    this->invalidateContent();
+}
+
+int Label::getTextSize()
+{
+    return m_textSize;
+}
+void Label::setTextSize(int size)
+{
+    this->m_textSize = size;
+    this->invalidateContent();
+}
+
+void Label::initialize(SDL_Renderer *context) {
+    super::initialize(context);
+
+    TTF_Font *textFont = TTF_OpenFont("assets/fonts/lato/Lato-Regular.ttf", m_textSize);
+    if (textFont == NULL) {
+        printf("TTF error: %s\n", TTF_GetError());
+        return;
+    }
+
+    SDL_Surface *textSurface;
+    textSurface = TTF_RenderText_Blended(textFont, this->m_text.c_str(), this->getForegroundColor().toSDLColor());
+    if (textSurface == NULL) {
+        printf("TTF error: %s\n", TTF_GetError());
+        return;
+    }
+
+    m_textTexture = SDL_CreateTextureFromSurface(context, textSurface);
+    if (m_textTexture == NULL) {
+        printf("TTF error: %s\n", TTF_GetError());
+        return;
+    }
+
+    SDL_FreeSurface(textSurface);
+    TTF_CloseFont(textFont);
+}
+
+Rect calculateLabelRect(Label *labelClass, Size textureSize) {
+    // Rect(this->getFrame().point, Size(textTextureWidth, textTextureHeight))
+
+    int x = 0;
+    int y = 0;
+    Rect controlFrame = labelClass->getFrame();
+
+    switch (labelClass->getHorizontalAlignment()) {
+    case LabelAlignment::Leading:
+        x = 0;
+        break;
+    case LabelAlignment::Center:
+        x = (int)round((controlFrame.size.w / 2) - (textureSize.w / 2));
+        break;
+    case LabelAlignment::Trailing:
+        x = controlFrame.size.w - textureSize.w;
+        break;
+    }
+
+    switch (labelClass->getVerticalAlignment()) {
+    case LabelAlignment::Leading:
+        y = 0;
+        break;
+    case LabelAlignment::Center:
+        y = (int)round((controlFrame.size.h / 2) - (textureSize.h / 2));
+        break;
+    case LabelAlignment::Trailing:
+        y = controlFrame.size.h - textureSize.h;
+        break;
+    }
+
+    return Rect(Point(x, y), textureSize);
+}
+
+void Label::render(SDL_Renderer *context) {
+    super::render(context);
+
+    int textTextureWidth, textTextureHeight;
+    SDL_QueryTexture(m_textTexture, NULL, NULL, &textTextureWidth, &textTextureHeight);
+
+    SDL_Rect textRect = calculateLabelRect(this, Size(textTextureWidth, textTextureHeight)).toSDLRect();
+    SDL_RenderCopy(context, m_textTexture, NULL, &textRect);
+}

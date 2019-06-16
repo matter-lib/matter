@@ -24,11 +24,12 @@
 #define UI_PUSHBUTTON_H
 
 #include "../units.h"
-#include "control.h"
+#include "label.h"
 
-class PushButton: Control
+class PushButton: public Label
 {
-
+public:
+    PushButton();
 };
 
 #endif

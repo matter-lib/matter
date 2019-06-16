@@ -77,7 +77,7 @@ public:
     Color disabledForegroundColor = Color(0, 0, 0, 255);
 
     // Getter methods
-    ControlState getControlState();
+    ControlState getState();
     Rect getFrame();
 
     void setSize(Size);
@@ -88,6 +88,9 @@ public:
     Color getBackgroundColor(ControlState state);
     Color getBackgroundColor();
 
+    Color getForegroundColor(ControlState state);
+    Color getForegroundColor();
+
     void invalidateContent();
 
     virtual void initialize(SDL_Renderer *context);
@@ -96,14 +99,16 @@ public:
     virtual void windowSizeChanged();
     virtual void stateChanged();
 private:
-    bool m_invalidatedContent = false;
+    void m_setState(ControlState state);
+
+    bool m_invalidatedContent = true;
     ControlState m_state = ControlState::Inactive;
 
     /// The position of the control
-    Point m_position;
+    Point m_position = Point(0, 0);
 
     /// The size of the control
-    Size m_size;
+    Size m_size = Size(0, 0);
 };
 
 #endif

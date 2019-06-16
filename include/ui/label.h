@@ -23,11 +23,46 @@
 #ifndef UI_LABEL_H
 #define UI_LABEL_H
 
+#include <string>
+#include <math.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include "control.h"
+#include "../color.h"
 
-class Label: Control
+enum class LabelAlignment {
+    Leading,
+    Center,
+    Trailing
+};
+
+class Label: public Control
 {
+public:
+    LabelAlignment getVerticalAlignment();
+    LabelAlignment getHorizontalAlignment();
 
+    void setVerticalAlignment(LabelAlignment alignment);
+    void setHorizontalAlignment(LabelAlignment alignment);
+
+    std::string getText();
+    void setText(std::string text);
+
+    int getTextSize();
+    void setTextSize(int size);
+
+    virtual void initialize(SDL_Renderer *context);
+    virtual void render(SDL_Renderer *context);
+private:
+    typedef Control super;
+
+    LabelAlignment m_verticalAlignment = LabelAlignment::Center;
+    LabelAlignment m_horizontalAlignment = LabelAlignment::Center;
+
+    std::string m_text = "Label";
+    int m_textSize = 16;
+
+    SDL_Texture *m_textTexture;
 };
 
 #endif

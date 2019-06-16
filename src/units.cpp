@@ -24,8 +24,6 @@
 
 // Point
 
-Point::Point() { }
-
 Point::Point(int x, int y)
 {
     this->x = x;
@@ -33,8 +31,6 @@ Point::Point(int x, int y)
 }
 
 // Size
-
-Size::Size() { }
 
 Size::Size(int w, int h)
 {
@@ -44,9 +40,7 @@ Size::Size(int w, int h)
 
 // Rect
 
-Rect::Rect() { }
-
-Rect::Rect(Point *point, Size *size)
+Rect::Rect(Point point, Size size)
 {
     this->point = point;
     this->size = size;
@@ -61,10 +55,10 @@ SDL_Rect Rect::toSDLRect()
 {
 
     SDL_Rect rect;
-    rect.x = point->x;
-    rect.y = point->y;
-    rect.w = size->w;
-    rect.h = size->h;
+    rect.x = point.x;
+    rect.y = point.y;
+    rect.w = size.w;
+    rect.h = size.h;
 
     return rect;
 }

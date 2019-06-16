@@ -30,7 +30,6 @@ class Point
 public:
     int x, y;
 
-    Point();
     Point(int x, int y);
 };
 
@@ -39,18 +38,16 @@ class Size
 public:
     int w, h;
 
-    Size();
     Size(int w, int h);
 };
 
 class Rect
 {
 public:
-    Point *point;
-    Size *size;
+    Point point = Point(0, 0);
+    Size size = Size(0, 0);
 
-    Rect();
-    Rect(Point *, Size *);
+    Rect(Point, Size);
 
     SDL_Rect toSDLRect();
 };

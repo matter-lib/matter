@@ -57,7 +57,7 @@ void Control::render(SDL_Renderer *context)
 */
 Rect Control::getFrame()
 {
-    Rect rect(&this->m_position, &this->m_size);
+    Rect rect(this->m_position, this->m_size);
     return rect;
 }
 
@@ -107,6 +107,43 @@ Color Control::getBackgroundColor(ControlState state)
     }
 }
 
+Color Control::getForegroundColor()
+{
+    return this->getForegroundColor(m_state);
+}
+
+Color Control::getForegroundColor(ControlState state)
+{
+    switch (state)
+    {
+        case ControlState::Active:
+            return this->activeForegroundColor; 
+            break;
+        case ControlState::Inactive:
+            return this->inactiveForegroundColor;
+            break;
+        case ControlState::Disabled:
+            return this->disabledForegroundColor;
+            break;
+        default: 
+            // Handle default cases
+            return this->inactiveForegroundColor;
+            break;
+    }
+}
+
+ControlState Control::getState()
+{
+    return m_state;
+}
+
+void Control::m_setState(ControlState state)
+{
+    m_state = state;
+    this->invalidateContent();
+    this->stateChanged();
+}
+
 /**
 * Invalidate the content of the controls. This specifies to the renderer
 * that we need to recall the `initialize` method and update the control.
@@ -134,14 +171,14 @@ void Control::processEvents(SDL_Event* event)
             if (isInsideBox && allowsClick)
             {
                 // Using `state` instead of `m_state` for setter to call delegates
-                this->m_state = ControlState::Active;
+                this->m_setState(ControlState::Active);
             }
         }
     }
     else if (event->type == SDL_MOUSEBUTTONUP)
     {
         // Reset the button state on mouse up, using `state` instead of `m_state` for setter to call delegates
-        this->m_state = ControlState::Inactive;
+        this->m_setState(ControlState::Inactive);
     }
 
 }
