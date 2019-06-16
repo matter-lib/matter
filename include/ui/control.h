@@ -59,27 +59,29 @@ public:
     bool autoSize = false;
 
     /// The background color to use when inactive
-    Color inactiveBackgroundColor = Color(0, 0, 0, 255);
+    Color inactiveBackgroundColor = Color(196, 196, 196, 255);
 
     /// The background color to use when active
-    Color activeBackgroundColor = Color(0, 0, 0, 255);
+    Color activeBackgroundColor = Color(249, 192, 0, 255);
 
     /// The background color to use when disabled
-    Color disabledBackgroundColor = Color(0, 0, 0, 255);
+    Color disabledBackgroundColor = Color(150, 150, 150, 255);
 
     /// The foreground color to use when inactive
     Color inactiveForegroundColor = Color(0, 0, 0, 255);
 
     /// The foreground color to use when active
-    Color activeForegroundColor = Color(0, 0, 0, 255);
+    Color activeForegroundColor = Color(255, 255, 255, 255);
 
     /// The foreground color to use when disabled
     Color disabledForegroundColor = Color(0, 0, 0, 255);
 
     // Getter methods
     ControlState getControlState();
-    Size getSize();
     Rect getFrame();
+
+    void setSize(Size);
+    void setPosition(Point);
 
     Control();
 
@@ -94,8 +96,8 @@ public:
     virtual void windowSizeChanged();
     virtual void stateChanged();
 private:
-    bool m_invalidatedContent;
-    ControlState m_state;
+    bool m_invalidatedContent = false;
+    ControlState m_state = ControlState::Inactive;
 
     /// The position of the control
     Point m_position;
