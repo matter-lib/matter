@@ -43,12 +43,6 @@ enum class ControlState
 class Control
 {
 public:
-    /// The position of the control
-    Point position;
-
-    /// The size of the control
-    Size size;
-
     /// The background color of the control
     Color backgroundColor = Color(0, 0, 0, 255);
 
@@ -83,8 +77,9 @@ public:
     Color disabledForegroundColor = Color(0, 0, 0, 255);
 
     // Getter methods
-    Rect getFrame();
     ControlState getControlState();
+    Size getSize();
+    Rect getFrame();
 
     Control();
 
@@ -95,10 +90,18 @@ public:
 
     virtual void initialize(SDL_Renderer *context);
     virtual void render(SDL_Renderer *context);
-    virtual void processEvents(SDL_Renderer *context);
+    virtual void processEvents(SDL_Event* event);
+    virtual void windowSizeChanged();
+    virtual void stateChanged();
 private:
     bool m_invalidatedContent;
     ControlState m_state;
+
+    /// The position of the control
+    Point m_position;
+
+    /// The size of the control
+    Size m_size;
 };
 
 #endif
