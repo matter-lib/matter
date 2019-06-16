@@ -61,6 +61,16 @@ Rect Control::getFrame()
     return rect;
 }
 
+void Control::setSize(Size size)
+{
+    this->m_size = size;
+}
+
+void Control::setPosition(Point position)
+{
+    this->m_position = position;
+}
+
 /**
 * Get the background color of the control for the current state.
 * 
