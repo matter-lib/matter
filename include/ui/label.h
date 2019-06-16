@@ -63,6 +63,8 @@ private:
     int m_textSize = 16;
 
     SDL_Texture *m_textTexture;
+
+    Rect m_calculateLabelRect(Size textureSize);
 };
 
 #endif

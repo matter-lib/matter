@@ -37,15 +37,20 @@ Size Window::getSize()
     return Size(w, h);
 }
 
+void Window::m_updateRootControl() {
+    this->m_rootControl->setPosition(Point(0, 0));
+    this->m_rootControl->setSize(this->getSize());
+}
+
 void Window::setRootControl(Control *control)
 {
-    control->setPosition(Point(0, 0));
-    control->setSize(this->getSize());
-    m_rootControl = control;
+    this->m_rootControl = control;
+    this->m_updateRootControl();
 }
 
 void Window::render()
 {
+    this->m_updateRootControl();
     this->m_rootControl->render(this->m_renderer);
 }
 
@@ -55,7 +60,7 @@ void Window::processEvents(SDL_Event *event)
     {
         if (event->window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
         {
-            this->setRootControl(m_rootControl);
+            this->m_updateRootControl();
             this->m_rootControl->windowSizeChanged();
         }
     }

@@ -57,12 +57,21 @@ void Control::render(SDL_Renderer *context)
 */
 Rect Control::getFrame()
 {
-    Rect rect(this->m_position, this->m_size);
-    return rect;
+    Size *inferredContentSize = this->contentSize();
+    if (this->inferContentSize && inferredContentSize != NULL) {
+        return Rect(this->m_position, *inferredContentSize);
+    } else {
+        return Rect(this->m_position, this->m_size);
+    }
 }
 
 void Control::setSize(Size size)
 {
+    Size *inferredContentSize = this->contentSize();
+    if (this->inferContentSize && inferredContentSize != NULL)
+    {
+        return;
+    }
     this->m_size = size;
 }
 
@@ -155,6 +164,16 @@ void Control::invalidateContent()
 
 void Control::initialize(SDL_Renderer *context) { }
 
+Size *Control::getInferredSize()
+{
+    Size *inferredContentSize = this->contentSize();
+    if (this->inferContentSize && inferredContentSize != NULL) {
+        return inferredContentSize;
+    } else {
+        return NULL;
+    }
+}
+
 void Control::processEvents(SDL_Event* event)
 {
     if (event->type == SDL_MOUSEBUTTONDOWN)
@@ -165,9 +184,11 @@ void Control::processEvents(SDL_Event* event)
             int mouseX, mouseY;
             SDL_GetMouseState(&mouseX, &mouseY);
 
+            Rect controlFrame = this->getFrame();
+
             // Check whether the mouse position is inside the button
-            bool isInsideBox = (mouseX > this->m_position.x && mouseX < this->m_position.x + this->m_size.w &&
-                mouseY > this->m_position.y && mouseY < this->m_position.y + this->m_size.h);
+            bool isInsideBox = (mouseX > controlFrame.point.x && mouseX < controlFrame.point.x + controlFrame.size.w &&
+                mouseY > controlFrame.point.y && mouseY < controlFrame.point.y + controlFrame.size.h);
             if (isInsideBox && allowsClick)
             {
                 // Using `state` instead of `m_state` for setter to call delegates
@@ -181,6 +202,11 @@ void Control::processEvents(SDL_Event* event)
         this->m_setState(ControlState::Inactive);
     }
 
+}
+
+Size *Control::contentSize()
+{
+    return NULL;
 }
 
 void Control::windowSizeChanged() { }

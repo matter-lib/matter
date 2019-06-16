@@ -24,10 +24,37 @@
 #define UI_BOX_H
 
 #include "../control.h"
+#include "../../units.h"
+#include <math.h>
+#include <vector>
 
-class Box: Control
+enum class BoxAxis {
+    Horizontal,
+    Vertical
+};
+
+class Box: public Control
 {
+public:
+    Box(BoxAxis axis);
 
+    BoxAxis getAxis();
+    void setAxis(BoxAxis axis);
+
+    virtual void render(SDL_Renderer *context);
+    virtual void processEvents(SDL_Event* event);
+    virtual void windowSizeChanged();
+    virtual void stateChanged();
+
+private:
+    typedef Control super;
+
+    std::vector<Control*> m_childControls;
+
+    int m_childSpacing = 0;
+    BoxAxis m_axis = BoxAxis::Horizontal;
+
+    void m_updateChildrenFrame();
 };
 
 #endif

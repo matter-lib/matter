@@ -85,14 +85,12 @@ void Label::initialize(SDL_Renderer *context) {
     TTF_CloseFont(textFont);
 }
 
-Rect calculateLabelRect(Label *labelClass, Size textureSize) {
-    // Rect(this->getFrame().point, Size(textTextureWidth, textTextureHeight))
-
+Rect Label::m_calculateLabelRect(Size textureSize) {
     int x = 0;
     int y = 0;
-    Rect controlFrame = labelClass->getFrame();
+    Rect controlFrame = this->getFrame();
 
-    switch (labelClass->getHorizontalAlignment()) {
+    switch (this->getHorizontalAlignment()) {
     case LabelAlignment::Leading:
         x = 0;
         break;
@@ -104,7 +102,7 @@ Rect calculateLabelRect(Label *labelClass, Size textureSize) {
         break;
     }
 
-    switch (labelClass->getVerticalAlignment()) {
+    switch (this->getVerticalAlignment()) {
     case LabelAlignment::Leading:
         y = 0;
         break;
@@ -125,6 +123,6 @@ void Label::render(SDL_Renderer *context) {
     int textTextureWidth, textTextureHeight;
     SDL_QueryTexture(m_textTexture, NULL, NULL, &textTextureWidth, &textTextureHeight);
 
-    SDL_Rect textRect = calculateLabelRect(this, Size(textTextureWidth, textTextureHeight)).toSDLRect();
+    SDL_Rect textRect = this->m_calculateLabelRect(Size(textTextureWidth, textTextureHeight)).toSDLRect();
     SDL_RenderCopy(context, m_textTexture, NULL, &textRect);
 }
