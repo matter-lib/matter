@@ -114,7 +114,7 @@ Rect Label::m_calculateLabelRect(Size textureSize) {
         break;
     }
 
-    return Rect(Point(x, y), textureSize);
+    return Rect(Point(this->getFrame().point.x + x, this->getFrame().point.y + y), textureSize);
 }
 
 void Label::render(SDL_Renderer *context) {

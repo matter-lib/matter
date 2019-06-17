@@ -22,6 +22,10 @@
 
 #include "../../../include/ui/layout/box.h"
 
+Box::Box(BoxAxis axis) {
+    this->m_axis = axis;
+}
+
 BoxAxis Box::getAxis()
 {
     return this->m_axis;
@@ -30,6 +34,11 @@ BoxAxis Box::getAxis()
 void Box::setAxis(BoxAxis axis)
 {
     this->m_axis = axis;
+}
+
+void Box::addChildControl(Control *child)
+{
+    this->m_childControls.push_back(child);
 }
 
 void Box::m_updateChildrenFrame()
@@ -75,18 +84,18 @@ void Box::m_updateChildrenFrame()
         {
             child->setSize(*inferredSize);
 
-            if (this->getAxis() == BoxAxis::Horizontal) { child->setPosition(Point(positionUnits, this->getFrame().point.y)); positionUnits += inferredSize->h; }
-            else { child->setPosition(Point(this->getFrame().point.x, positionUnits)); positionUnits += inferredSize->w; }
+            if (this->getAxis() == BoxAxis::Horizontal) { child->setPosition(Point(this->getFrame().point.x + positionUnits, this->getFrame().point.y)); positionUnits += inferredSize->h; }
+            else { child->setPosition(Point(this->getFrame().point.x, this->getFrame().point.y + positionUnits)); positionUnits += inferredSize->w; }
         }
         else {
             if (this->getAxis() == BoxAxis::Horizontal)
             {
                 child->setSize(Size(unitsPerChild, this->getFrame().size.h));
-                child->setPosition(Point(positionUnits, this->getFrame().point.y));
+                child->setPosition(Point(this->getFrame().point.x + positionUnits, this->getFrame().point.y));
             }
             else {
                 child->setSize(Size(this->getFrame().size.w, unitsPerChild));
-                child->setPosition(Point(this->getFrame().point.x, positionUnits));
+                child->setPosition(Point(this->getFrame().point.x, this->getFrame().point.y + positionUnits));
             }
             positionUnits += unitsPerChild;
         }
@@ -107,14 +116,26 @@ void Box::render(SDL_Renderer *context)
 void Box::processEvents(SDL_Event* event)
 {
     super::processEvents(event);
+
+    for (auto const& child: this->m_childControls) {
+        child->processEvents(event);
+    }
 }
 
 void Box::windowSizeChanged()
 {
     super::windowSizeChanged();
+
+    for (auto const& child: this->m_childControls) {
+        child->windowSizeChanged();
+    }
 }
 
 void Box::stateChanged()
 {
     super::stateChanged();
+
+    for (auto const& child: this->m_childControls) {
+        child->stateChanged();
+    }
 }

@@ -26,6 +26,7 @@
 
 #include "../include/ui/window.h"
 #include "../include/ui/pushbutton.h"
+#include "../include/ui/layout/box.h"
 
 int main()
 {
@@ -48,8 +49,17 @@ int main()
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     Window win = Window(window, renderer);
 
-    Label btn = PushButton();
-    win.setRootControl(&btn);
+    PushButton btn1 = PushButton();
+    btn1.setText("Button One");
+
+    PushButton btn2 = PushButton();
+    btn2.setText("Button Two");
+
+    Box hbox = Box(BoxAxis::Horizontal);
+    hbox.addChildControl(&btn1);
+    hbox.addChildControl(&btn2);
+
+    win.setRootControl(&hbox);
 
     bool quit = false;
     while (!quit)

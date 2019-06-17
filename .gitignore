@@ -40,4 +40,8 @@ matter
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Sublime
+matter.sublime-workspace
+
+# macOS
 .DS_Store

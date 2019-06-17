@@ -41,6 +41,8 @@ public:
     BoxAxis getAxis();
     void setAxis(BoxAxis axis);
 
+    void addChildControl(Control *child);
+
     virtual void render(SDL_Renderer *context);
     virtual void processEvents(SDL_Event* event);
     virtual void windowSizeChanged();
