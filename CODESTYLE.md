@@ -47,7 +47,7 @@ This applies to classes as well:
 class Cat
 {
 
-}
+};
 ```
 
 ### Pointers
@@ -91,7 +91,7 @@ class Person
 {
 public:
     int age;
-}
+};
 ```
 
 ### Namespace
