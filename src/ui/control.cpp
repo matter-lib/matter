@@ -57,12 +57,21 @@ void Control::render(SDL_Renderer *context)
 */
 Rect Control::getFrame()
 {
-    Rect rect(&this->m_position, &this->m_size);
-    return rect;
+    Size *inferredContentSize = this->contentSize();
+    if (this->inferContentSize && inferredContentSize != NULL) {
+        return Rect(this->m_position, *inferredContentSize);
+    } else {
+        return Rect(this->m_position, this->m_size);
+    }
 }
 
 void Control::setSize(Size size)
 {
+    Size *inferredContentSize = this->contentSize();
+    if (this->inferContentSize && inferredContentSize != NULL)
+    {
+        return;
+    }
     this->m_size = size;
 }
 
@@ -107,6 +116,43 @@ Color Control::getBackgroundColor(ControlState state)
     }
 }
 
+Color Control::getForegroundColor()
+{
+    return this->getForegroundColor(m_state);
+}
+
+Color Control::getForegroundColor(ControlState state)
+{
+    switch (state)
+    {
+        case ControlState::Active:
+            return this->activeForegroundColor; 
+            break;
+        case ControlState::Inactive:
+            return this->inactiveForegroundColor;
+            break;
+        case ControlState::Disabled:
+            return this->disabledForegroundColor;
+            break;
+        default: 
+            // Handle default cases
+            return this->inactiveForegroundColor;
+            break;
+    }
+}
+
+ControlState Control::getState()
+{
+    return m_state;
+}
+
+void Control::m_setState(ControlState state)
+{
+    m_state = state;
+    this->invalidateContent();
+    this->stateChanged();
+}
+
 /**
 * Invalidate the content of the controls. This specifies to the renderer
 * that we need to recall the `initialize` method and update the control.
@@ -118,6 +164,16 @@ void Control::invalidateContent()
 
 void Control::initialize(SDL_Renderer *context) { }
 
+Size *Control::getInferredSize()
+{
+    Size *inferredContentSize = this->contentSize();
+    if (this->inferContentSize && inferredContentSize != NULL) {
+        return inferredContentSize;
+    } else {
+        return NULL;
+    }
+}
+
 void Control::processEvents(SDL_Event* event)
 {
     if (event->type == SDL_MOUSEBUTTONDOWN)
@@ -128,22 +184,29 @@ void Control::processEvents(SDL_Event* event)
             int mouseX, mouseY;
             SDL_GetMouseState(&mouseX, &mouseY);
 
+            Rect controlFrame = this->getFrame();
+
             // Check whether the mouse position is inside the button
-            bool isInsideBox = (mouseX > this->m_position.x && mouseX < this->m_position.x + this->m_size.w &&
-                mouseY > this->m_position.y && mouseY < this->m_position.y + this->m_size.h);
+            bool isInsideBox = (mouseX > controlFrame.point.x && mouseX < controlFrame.point.x + controlFrame.size.w &&
+                mouseY > controlFrame.point.y && mouseY < controlFrame.point.y + controlFrame.size.h);
             if (isInsideBox && allowsClick)
             {
                 // Using `state` instead of `m_state` for setter to call delegates
-                this->m_state = ControlState::Active;
+                this->m_setState(ControlState::Active);
             }
         }
     }
     else if (event->type == SDL_MOUSEBUTTONUP)
     {
         // Reset the button state on mouse up, using `state` instead of `m_state` for setter to call delegates
-        this->m_state = ControlState::Inactive;
+        this->m_setState(ControlState::Inactive);
     }
 
+}
+
+Size *Control::contentSize()
+{
+    return NULL;
 }
 
 void Control::windowSizeChanged() { }

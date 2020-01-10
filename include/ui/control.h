@@ -55,9 +55,6 @@ public:
     /// Whether the control allows keyboard input or not
     bool allowsKeyboard = false;
 
-    /// Whether the control allows auto-sizing or not
-    bool autoSize = false;
-
     /// The background color to use when inactive
     Color inactiveBackgroundColor = Color(196, 196, 196, 255);
 
@@ -76,17 +73,37 @@ public:
     /// The foreground color to use when disabled
     Color disabledForegroundColor = Color(0, 0, 0, 255);
 
+    /**
+     * Size is strictly based on content, size will not changed by parent
+     *
+     * - contentSize virtual function should be overriden if true
+     */
+    bool inferContentSize = false;
+
+    /**
+     * Should return content size, only will be called when `inferContentSize` is true
+     *
+     * - Can return NULL and override inferContentSize, will cause the Control's size to be changed
+     * - Should not call `super`
+     */
+    virtual Size *contentSize();
+
     // Getter methods
-    ControlState getControlState();
+    ControlState getState();
     Rect getFrame();
 
     void setSize(Size);
     void setPosition(Point);
 
+    Size *getInferredSize();
+
     Control();
 
     Color getBackgroundColor(ControlState state);
     Color getBackgroundColor();
+
+    Color getForegroundColor(ControlState state);
+    Color getForegroundColor();
 
     void invalidateContent();
 
@@ -96,14 +113,16 @@ public:
     virtual void windowSizeChanged();
     virtual void stateChanged();
 private:
-    bool m_invalidatedContent = false;
+    void m_setState(ControlState state);
+
+    bool m_invalidatedContent = true;
     ControlState m_state = ControlState::Inactive;
 
     /// The position of the control
-    Point m_position;
+    Point m_position = Point(0, 0);
 
     /// The size of the control
-    Size m_size;
+    Size m_size = Size(0, 0);
 };
 
 #endif
