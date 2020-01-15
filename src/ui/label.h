@@ -1,6 +1,6 @@
 /**
  * MIT License
- * Copyright (c) 2019 Matter Team
+ * Copyright (c) 2020 Matter Team
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef UI_LABEL_H
+#define UI_LABEL_H
 
+#include <string>
+#include <math.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include "control.h"
+#include "../color.h"
 
-class Color
+enum class LabelAlignment {
+    Leading,
+    Center,
+    Trailing
+};
+
+class Label: public Control
 {
 public:
-    int r, g, b, a;
+    LabelAlignment getVerticalAlignment();
+    LabelAlignment getHorizontalAlignment();
 
-    Color(int r, int g, int b, int a);
+    void setVerticalAlignment(LabelAlignment alignment);
+    void setHorizontalAlignment(LabelAlignment alignment);
 
-    // Conversion methods
-    SDL_Color toSDLColor();
-    Color fromSDLColor(SDL_Color *color);
+    std::string getText();
+    void setText(std::string text);
+
+    int getTextSize();
+    void setTextSize(int size);
+
+    virtual void initialize(SDL_Renderer *context);
+    virtual void render(SDL_Renderer *context);
+private:
+    typedef Control super;
+
+    LabelAlignment m_verticalAlignment = LabelAlignment::Center;
+    LabelAlignment m_horizontalAlignment = LabelAlignment::Center;
+
+    std::string m_text = "Label";
+    int m_textSize = 16;
+
+    SDL_Texture *m_textTexture;
+
+    Rect m_calculateLabelRect(Size textureSize);
 };
 
 #endif

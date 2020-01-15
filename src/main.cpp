@@ -1,6 +1,6 @@
 /**
 * MIT License
-* Copyright (c) 2019 Matter Team
+* Copyright (c) 2020 Matter Team
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "../include/ui/window.h"
-#include "../include/ui/pushbutton.h"
-#include "../include/ui/layout/box.h"
+#include "ui/window.h"
+#include "ui/pushbutton.h"
+#include "ui/layout/box.h"
 
-int main()
+int main(int argv, char** args)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL init error: %s\n", SDL_GetError());
