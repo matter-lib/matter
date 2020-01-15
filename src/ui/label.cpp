@@ -88,17 +88,17 @@ void Label::initialize(SDL_Renderer *context) {
 Rect Label::m_calculateLabelRect(Size textureSize) {
     int x = 0;
     int y = 0;
-    Rect controlFrame = this->getFrame();
+    Rect viewFrame = this->getFrame();
 
     switch (this->getHorizontalAlignment()) {
     case LabelAlignment::Leading:
         x = 0;
         break;
     case LabelAlignment::Center:
-        x = (int)round((controlFrame.size.w / 2) - (textureSize.w / 2));
+        x = (int)round((viewFrame.size.w / 2) - (textureSize.w / 2));
         break;
     case LabelAlignment::Trailing:
-        x = controlFrame.size.w - textureSize.w;
+        x = viewFrame.size.w - textureSize.w;
         break;
     }
 
@@ -107,10 +107,10 @@ Rect Label::m_calculateLabelRect(Size textureSize) {
         y = 0;
         break;
     case LabelAlignment::Center:
-        y = (int)round((controlFrame.size.h / 2) - (textureSize.h / 2));
+        y = (int)round((viewFrame.size.h / 2) - (textureSize.h / 2));
         break;
     case LabelAlignment::Trailing:
-        y = controlFrame.size.h - textureSize.h;
+        y = viewFrame.size.h - textureSize.h;
         break;
     }
 

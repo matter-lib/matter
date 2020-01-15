@@ -36,9 +36,9 @@ void Box::setAxis(BoxAxis axis)
     this->m_axis = axis;
 }
 
-void Box::addChildControl(Control *child)
+void Box::addChildView(View *child)
 {
-    this->m_childControls.push_back(child);
+    this->m_childViews.push_back(child);
 }
 
 void Box::m_updateChildrenFrame()
@@ -46,7 +46,7 @@ void Box::m_updateChildrenFrame()
     int inferredSizeTotal = 0;
     int inferredSizeItems = 0;
     int *largestInverseSize = NULL;
-    for (auto const& child: this->m_childControls)
+    for (auto const& child: this->m_childViews)
     {
         Size *inferredSize = child->getInferredSize();
         if (inferredSize != NULL)
@@ -68,7 +68,7 @@ void Box::m_updateChildrenFrame()
     if (this->getAxis() == BoxAxis::Horizontal) { boxUnit = this->getFrame().size.w; }
     else { boxUnit = this->getFrame().size.h; }
 
-    int resizeableItems = this->m_childControls.size() - inferredSizeItems;
+    int resizeableItems = this->m_childViews.size() - inferredSizeItems;
     int freeSpace = boxUnit - inferredSizeTotal;
 
     int unitsPerChild = 0;
@@ -77,7 +77,7 @@ void Box::m_updateChildrenFrame()
     }
     
     int positionUnits = 0;
-    for (auto const& child: this->m_childControls)
+    for (auto const& child: this->m_childViews)
     {
         Size *inferredSize = child->getInferredSize();
         if (inferredSize != NULL)
@@ -108,7 +108,7 @@ void Box::render(SDL_Renderer *context)
 
     this->m_updateChildrenFrame();
 
-    for (auto const& child: this->m_childControls) {
+    for (auto const& child: this->m_childViews) {
         child->render(context);
     }
 }
@@ -117,7 +117,7 @@ void Box::processEvents(SDL_Event* event)
 {
     super::processEvents(event);
 
-    for (auto const& child: this->m_childControls) {
+    for (auto const& child: this->m_childViews) {
         child->processEvents(event);
     }
 }
@@ -126,7 +126,7 @@ void Box::windowSizeChanged()
 {
     super::windowSizeChanged();
 
-    for (auto const& child: this->m_childControls) {
+    for (auto const& child: this->m_childViews) {
         child->windowSizeChanged();
     }
 }
@@ -135,7 +135,7 @@ void Box::stateChanged()
 {
     super::stateChanged();
 
-    for (auto const& child: this->m_childControls) {
+    for (auto const& child: this->m_childViews) {
         child->stateChanged();
     }
 }

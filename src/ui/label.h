@@ -27,7 +27,7 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include "control.h"
+#include "view.h"
 #include "../color.h"
 
 enum class LabelAlignment {
@@ -36,7 +36,7 @@ enum class LabelAlignment {
     Trailing
 };
 
-class Label: public Control
+class Label: public View
 {
 public:
     LabelAlignment getVerticalAlignment();
@@ -54,7 +54,7 @@ public:
     virtual void initialize(SDL_Renderer *context);
     virtual void render(SDL_Renderer *context);
 private:
-    typedef Control super;
+    typedef View super;
 
     LabelAlignment m_verticalAlignment = LabelAlignment::Center;
     LabelAlignment m_horizontalAlignment = LabelAlignment::Center;

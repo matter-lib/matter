@@ -70,7 +70,7 @@ The top of every file should contain the license followed by a new line. The lic
 
 #### Header Guards
 
-Header guards are mandatory. The `#define` variable is created using the path of that header file within `include`. For example `/ui/control.h` would become `#define UI_CONTROL_H`. If a file sits in the root, such as `units.h`, then it would be `UNITS_H`.
+Header guards are mandatory. The `#define` variable is created using the path of that header file within `include`. For example `/ui/view.h` would become `#define UI_VIEW_H`. If a file sits in the root, such as `units.h`, then it would be `UNITS_H`.
 
 If you are unsure how to create a header guard then refer to another header file within the project.
 

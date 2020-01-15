@@ -20,15 +20,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef UI_CONTROL_H
-#define UI_CONTROL_H
+#ifndef UI_VIEW_H
+#define UI_VIEW_H
 
 #include <SDL2/SDL.h>
 
 #include "../units.h"
 #include "../color.h"
 
-enum class ControlState
+enum class ViewState
 {
     Active,
     Inactive,
@@ -36,23 +36,23 @@ enum class ControlState
 };
 
 /**
- * A control is the base class that all controls such as buttons, labels,
+ * A view is the base class that all controls such as buttons, labels,
  * text-fields etc inherit from. It is at the top of the layout tree, and does
  * little on its own.
  */
-class Control
+class View
 {
 public:
-    /// The background color of the control
+    /// The background color of the view
     Color backgroundColor = Color(0, 0, 0, 255);
 
-    /// Whether the control allows clicking or not
+    /// Whether the view allows clicking or not
     bool allowsClick = false;
 
-    /// Whether the control allows hovering or not
+    /// Whether the view allows hovering or not
     bool allowsHover = false;
 
-    /// Whether the control allows keyboard input or not
+    /// Whether the view allows keyboard input or not
     bool allowsKeyboard = false;
 
     /// The background color to use when inactive
@@ -83,13 +83,13 @@ public:
     /**
      * Should return content size, only will be called when `inferContentSize` is true
      *
-     * - Can return NULL and override inferContentSize, will cause the Control's size to be changed
+     * - Can return NULL and override inferContentSize, will cause the View's size to be changed
      * - Should not call `super`
      */
     virtual Size *contentSize();
 
     // Getter methods
-    ControlState getState();
+    ViewState getState();
     Rect getFrame();
 
     void setSize(Size);
@@ -97,12 +97,12 @@ public:
 
     Size *getInferredSize();
 
-    Control();
+    View();
 
-    Color getBackgroundColor(ControlState state);
+    Color getBackgroundColor(ViewState state);
     Color getBackgroundColor();
 
-    Color getForegroundColor(ControlState state);
+    Color getForegroundColor(ViewState state);
     Color getForegroundColor();
 
     void invalidateContent();
@@ -113,15 +113,15 @@ public:
     virtual void windowSizeChanged();
     virtual void stateChanged();
 private:
-    void m_setState(ControlState state);
+    void m_setState(ViewState state);
 
     bool m_invalidatedContent = true;
-    ControlState m_state = ControlState::Inactive;
+    ViewState m_state = ViewState::Inactive;
 
-    /// The position of the control
+    /// The position of the view
     Point m_position = Point(0, 0);
 
-    /// The size of the control
+    /// The size of the view
     Size m_size = Size(0, 0);
 };
 

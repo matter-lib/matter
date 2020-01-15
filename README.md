@@ -14,7 +14,7 @@ Window win = Window(window, renderer);
 
 Label btn = PushButton();
 btn.setText("Click Me");
-win.setRootControl(&btn);
+win.setRootView(&btn);
 ```
 
 ## Building
