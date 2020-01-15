@@ -1,6 +1,6 @@
 /**
  * MIT License
- * Copyright (c) 2019 Matter Team
+ * Copyright (c) 2020 Matter Team
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,43 +20,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef UI_BOX_H
-#define UI_BOX_H
+#ifndef COLOR_H
+#define COLOR_H
 
-#include "../control.h"
-#include "../../units.h"
-#include <math.h>
-#include <vector>
+#include <SDL2/SDL.h>
 
-enum class BoxAxis {
-    Horizontal,
-    Vertical
-};
-
-class Box: public Control
+class Color
 {
 public:
-    Box(BoxAxis axis);
+    int r, g, b, a;
 
-    BoxAxis getAxis();
-    void setAxis(BoxAxis axis);
+    Color(int r, int g, int b, int a);
 
-    void addChildControl(Control *child);
-
-    virtual void render(SDL_Renderer *context);
-    virtual void processEvents(SDL_Event* event);
-    virtual void windowSizeChanged();
-    virtual void stateChanged();
-
-private:
-    typedef Control super;
-
-    std::vector<Control*> m_childControls;
-
-    int m_childSpacing = 0;
-    BoxAxis m_axis = BoxAxis::Horizontal;
-
-    void m_updateChildrenFrame();
+    // Conversion methods
+    SDL_Color toSDLColor();
+    Color fromSDLColor(SDL_Color *color);
 };
 
 #endif
