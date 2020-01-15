@@ -56,10 +56,10 @@ int main(int argv, char** args)
     btn2.setText("Button Two");
 
     Box hbox = Box(BoxAxis::Horizontal);
-    hbox.addChildControl(&btn1);
-    hbox.addChildControl(&btn2);
+    hbox.addChildView(&btn1);
+    hbox.addChildView(&btn2);
 
-    win.setRootControl(&hbox);
+    win.setRootView(&hbox);
 
     bool quit = false;
     while (!quit)

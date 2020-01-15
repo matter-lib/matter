@@ -23,7 +23,7 @@
 #ifndef UI_BOX_H
 #define UI_BOX_H
 
-#include "../control.h"
+#include "../view.h"
 #include "../../units.h"
 #include <math.h>
 #include <vector>
@@ -33,7 +33,7 @@ enum class BoxAxis {
     Vertical
 };
 
-class Box: public Control
+class Box: public View
 {
 public:
     Box(BoxAxis axis);
@@ -41,7 +41,7 @@ public:
     BoxAxis getAxis();
     void setAxis(BoxAxis axis);
 
-    void addChildControl(Control *child);
+    void addChildView(View *child);
 
     virtual void render(SDL_Renderer *context);
     virtual void processEvents(SDL_Event* event);
@@ -49,9 +49,9 @@ public:
     virtual void stateChanged();
 
 private:
-    typedef Control super;
+    typedef View super;
 
-    std::vector<Control*> m_childControls;
+    std::vector<View*> m_childViews;
 
     int m_childSpacing = 0;
     BoxAxis m_axis = BoxAxis::Horizontal;

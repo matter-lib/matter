@@ -37,21 +37,21 @@ Size Window::getSize()
     return Size(w, h);
 }
 
-void Window::m_updateRootControl() {
-    this->m_rootControl->setPosition(Point(0, 0));
-    this->m_rootControl->setSize(this->getSize());
+void Window::m_updateRootView() {
+    this->m_rootView->setPosition(Point(0, 0));
+    this->m_rootView->setSize(this->getSize());
 }
 
-void Window::setRootControl(Control *control)
+void Window::setRootView(View *view)
 {
-    this->m_rootControl = control;
-    this->m_updateRootControl();
+    this->m_rootView = view;
+    this->m_updateRootView();
 }
 
 void Window::render()
 {
-    this->m_updateRootControl();
-    this->m_rootControl->render(this->m_renderer);
+    this->m_updateRootView();
+    this->m_rootView->render(this->m_renderer);
 }
 
 void Window::processEvents(SDL_Event *event)
@@ -60,11 +60,11 @@ void Window::processEvents(SDL_Event *event)
     {
         if (event->window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
         {
-            this->m_updateRootControl();
-            this->m_rootControl->windowSizeChanged();
+            this->m_updateRootView();
+            this->m_rootView->windowSizeChanged();
         }
     }
 
-    this->m_rootControl->processEvents(event);
+    this->m_rootView->processEvents(event);
 }
 

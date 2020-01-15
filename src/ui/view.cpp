@@ -20,16 +20,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "control.h"
+#include "view.h"
 
-Control::Control() { }
+View::View() { }
 
 /**
-* Renders the control using the given renderer context.
+* Renders the view using the given renderer context.
 * 
 * @param context The SDL_Renderer context to render using
 */
-void Control::render(SDL_Renderer *context)
+void View::render(SDL_Renderer *context)
 {
     // Setting the background color to render
     Color drawColor = this->getBackgroundColor();
@@ -50,12 +50,12 @@ void Control::render(SDL_Renderer *context)
 }
 
 /**
-* Get the frame of the control. The frame contains the position
-* as well as the size of the control.
+* Get the frame of the view. The frame contains the position
+* as well as the size of the view.
 * 
-* @return The frame of the control
+* @return The frame of the view
 */
-Rect Control::getFrame()
+Rect View::getFrame()
 {
     Size *inferredContentSize = this->contentSize();
     if (this->inferContentSize && inferredContentSize != NULL) {
@@ -65,7 +65,7 @@ Rect Control::getFrame()
     }
 }
 
-void Control::setSize(Size size)
+void View::setSize(Size size)
 {
     Size *inferredContentSize = this->contentSize();
     if (this->inferContentSize && inferredContentSize != NULL)
@@ -75,38 +75,38 @@ void Control::setSize(Size size)
     this->m_size = size;
 }
 
-void Control::setPosition(Point position)
+void View::setPosition(Point position)
 {
     this->m_position = position;
 }
 
 /**
-* Get the background color of the control for the current state.
+* Get the background color of the view for the current state.
 * 
-* @return The background color of the control
+* @return The background color of the view
 */
-Color Control::getBackgroundColor()
+Color View::getBackgroundColor()
 {
     return this->getBackgroundColor(m_state);
 }
 
 /**
-* Get the background color of the control for the given state.
-* @param state The state that the control is in
+* Get the background color of the view for the given state.
+* @param state The state that the view is in
 * 
-* @return The background color of the control 
+* @return The background color of the view 
 */
-Color Control::getBackgroundColor(ControlState state)
+Color View::getBackgroundColor(ViewState state)
 {
     switch (state)
     {
-        case ControlState::Active:
+        case ViewState::Active:
             return this->activeBackgroundColor; 
             break;
-        case ControlState::Inactive:
+        case ViewState::Inactive:
             return this->inactiveBackgroundColor;
             break;
-        case ControlState::Disabled:
+        case ViewState::Disabled:
             return this->disabledBackgroundColor;
             break;
         default: 
@@ -116,22 +116,22 @@ Color Control::getBackgroundColor(ControlState state)
     }
 }
 
-Color Control::getForegroundColor()
+Color View::getForegroundColor()
 {
     return this->getForegroundColor(m_state);
 }
 
-Color Control::getForegroundColor(ControlState state)
+Color View::getForegroundColor(ViewState state)
 {
     switch (state)
     {
-        case ControlState::Active:
+        case ViewState::Active:
             return this->activeForegroundColor; 
             break;
-        case ControlState::Inactive:
+        case ViewState::Inactive:
             return this->inactiveForegroundColor;
             break;
-        case ControlState::Disabled:
+        case ViewState::Disabled:
             return this->disabledForegroundColor;
             break;
         default: 
@@ -141,12 +141,12 @@ Color Control::getForegroundColor(ControlState state)
     }
 }
 
-ControlState Control::getState()
+ViewState View::getState()
 {
     return m_state;
 }
 
-void Control::m_setState(ControlState state)
+void View::m_setState(ViewState state)
 {
     m_state = state;
     this->invalidateContent();
@@ -154,17 +154,17 @@ void Control::m_setState(ControlState state)
 }
 
 /**
-* Invalidate the content of the controls. This specifies to the renderer
-* that we need to recall the `initialize` method and update the control.
+* Invalidate the content of the views. This specifies to the renderer
+* that we need to recall the `initialize` method and update the view.
 */
-void Control::invalidateContent()
+void View::invalidateContent()
 {
     this->m_invalidatedContent = true;
 }
 
-void Control::initialize(SDL_Renderer *context) { }
+void View::initialize(SDL_Renderer *context) { }
 
-Size *Control::getInferredSize()
+Size *View::getInferredSize()
 {
     Size *inferredContentSize = this->contentSize();
     if (this->inferContentSize && inferredContentSize != NULL) {
@@ -174,7 +174,7 @@ Size *Control::getInferredSize()
     }
 }
 
-void Control::processEvents(SDL_Event* event)
+void View::processEvents(SDL_Event* event)
 {
     if (event->type == SDL_MOUSEBUTTONDOWN)
     {
@@ -184,30 +184,30 @@ void Control::processEvents(SDL_Event* event)
             int mouseX, mouseY;
             SDL_GetMouseState(&mouseX, &mouseY);
 
-            Rect controlFrame = this->getFrame();
+            Rect viewFrame = this->getFrame();
 
             // Check whether the mouse position is inside the button
-            bool isInsideBox = (mouseX > controlFrame.point.x && mouseX < controlFrame.point.x + controlFrame.size.w &&
-                mouseY > controlFrame.point.y && mouseY < controlFrame.point.y + controlFrame.size.h);
+            bool isInsideBox = (mouseX > viewFrame.point.x && mouseX < viewFrame.point.x + viewFrame.size.w &&
+                mouseY > viewFrame.point.y && mouseY < viewFrame.point.y + viewFrame.size.h);
             if (isInsideBox && allowsClick)
             {
                 // Using `state` instead of `m_state` for setter to call delegates
-                this->m_setState(ControlState::Active);
+                this->m_setState(ViewState::Active);
             }
         }
     }
     else if (event->type == SDL_MOUSEBUTTONUP)
     {
         // Reset the button state on mouse up, using `state` instead of `m_state` for setter to call delegates
-        this->m_setState(ControlState::Inactive);
+        this->m_setState(ViewState::Inactive);
     }
 
 }
 
-Size *Control::contentSize()
+Size *View::contentSize()
 {
     return NULL;
 }
 
-void Control::windowSizeChanged() { }
-void Control::stateChanged() { }
+void View::windowSizeChanged() { }
+void View::stateChanged() { }

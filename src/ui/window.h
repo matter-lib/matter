@@ -26,16 +26,16 @@
 #include <SDL2/SDL.h>
 #include "../color.h"
 #include "../units.h"
-#include "control.h"
+#include "view.h"
 
 class Window
 {
-    Control *m_rootControl;
+    View *m_rootView;
 
     SDL_Window *m_window;
     SDL_Renderer *m_renderer;
 
-    void m_updateRootControl();
+    void m_updateRootView();
 
 public:
 
@@ -43,7 +43,7 @@ public:
 
     Size getSize();
 
-    void setRootControl(Control*);
+    void setRootView(View*);
     void render();
     void processEvents(SDL_Event *);
 };
