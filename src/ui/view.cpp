@@ -57,21 +57,11 @@ void View::render(SDL_Renderer *context)
 */
 Rect View::getFrame()
 {
-    Size *inferredContentSize = this->contentSize();
-    if (this->inferContentSize && inferredContentSize != NULL) {
-        return Rect(this->m_position, *inferredContentSize);
-    } else {
-        return Rect(this->m_position, this->m_size);
-    }
+    return Rect(this->m_position, this->m_size);
 }
 
 void View::setSize(Size size)
 {
-    Size *inferredContentSize = this->contentSize();
-    if (this->inferContentSize && inferredContentSize != NULL)
-    {
-        return;
-    }
     this->m_size = size;
 }
 

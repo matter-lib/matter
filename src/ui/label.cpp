@@ -22,6 +22,15 @@
 
 #include "label.h"
 
+Label::Label() {
+    this->inferContentSize = true;
+}
+
+Size *Label::contentSize() {
+    Size* size = new Size(100, 100);
+    return size;
+}
+
 LabelAlignment Label::getVerticalAlignment()
 {
     return this->m_verticalAlignment;

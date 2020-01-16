@@ -42,6 +42,10 @@ public:
     LabelAlignment getVerticalAlignment();
     LabelAlignment getHorizontalAlignment();
 
+    Label();
+
+    virtual Size *contentSize();
+
     void setVerticalAlignment(LabelAlignment alignment);
     void setHorizontalAlignment(LabelAlignment alignment);
 

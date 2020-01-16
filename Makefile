@@ -1,5 +1,5 @@
 CC=g++
-FLAGS=-std=c++11 -Wall -Wextra
+FLAGS=-std=c++11 -Wall -Wextra -g
 
 LIBS=-lSDL2 -lSDL2_ttf
 #ifdef __MINGW32__

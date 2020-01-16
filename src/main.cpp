@@ -55,11 +55,11 @@ int main(int argv, char** args)
     PushButton btn2 = PushButton();
     btn2.setText("Button Two");
 
-    Box hbox = Box(BoxAxis::Horizontal);
-    hbox.addChildView(&btn1);
-    hbox.addChildView(&btn2);
+    Box box = Box(BoxAxis::Vertical);
+    box.addChildView(&btn1);
+    box.addChildView(&btn2);
 
-    win.setRootView(&hbox);
+    win.setRootView(&box);
 
     bool quit = false;
     while (!quit)
