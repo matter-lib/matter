@@ -26,9 +26,17 @@ Label::Label() {
     this->inferContentSize = true;
 }
 
-Size *Label::contentSize() {
-    Size* size = new Size(100, 100);
-    return size;
+Size *Label::contentSize()
+{
+    if (m_textTexture != NULL) {
+        int textTextureWidth, textTextureHeight;
+        SDL_QueryTexture(m_textTexture, NULL, NULL, &textTextureWidth, &textTextureHeight);
+
+        Size* size = new Size(textTextureWidth, textTextureHeight);
+        return size;
+    }
+
+    return NULL;
 }
 
 LabelAlignment Label::getVerticalAlignment()
@@ -40,7 +48,8 @@ LabelAlignment Label::getHorizontalAlignment()
     return this->m_horizontalAlignment;
 }
 
-void Label::setVerticalAlignment(LabelAlignment alignment) {
+void Label::setVerticalAlignment(LabelAlignment alignment)
+{
     this->m_verticalAlignment = alignment;
 }
 void Label::setHorizontalAlignment(LabelAlignment alignment)

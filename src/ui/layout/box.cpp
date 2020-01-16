@@ -80,6 +80,9 @@ void Box::m_updateChildrenFrame()
     for (auto const& child: this->m_childViews)
     {
         Size *inferredSize = child->getInferredSize();
+
+
+
         if (inferredSize != NULL)
         {
             if (this->useContentSizeOnAxis)
@@ -96,8 +99,8 @@ void Box::m_updateChildrenFrame()
                 }
             }
 
-            if (this->getAxis() == BoxAxis::Horizontal) { child->setPosition(Point(this->getFrame().point.x + positionUnits, this->getFrame().point.y)); positionUnits += inferredSize->h; }
-            else { child->setPosition(Point(this->getFrame().point.x, this->getFrame().point.y + positionUnits)); positionUnits += inferredSize->w; }
+            if (this->getAxis() == BoxAxis::Horizontal) { child->setPosition(Point(this->getFrame().point.x + positionUnits, this->getFrame().point.y)); positionUnits += inferredSize->w; }
+            else { child->setPosition(Point(this->getFrame().point.x, this->getFrame().point.y + positionUnits)); positionUnits += inferredSize->h; }
         }
         else {
             if (this->getAxis() == BoxAxis::Horizontal)

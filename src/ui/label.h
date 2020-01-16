@@ -66,7 +66,7 @@ private:
     std::string m_text = "Label";
     int m_textSize = 16;
 
-    SDL_Texture *m_textTexture;
+    SDL_Texture *m_textTexture = NULL;
 
     Rect m_calculateLabelRect(Size textureSize);
 };

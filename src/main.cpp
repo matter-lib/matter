@@ -50,14 +50,16 @@ int main(int argv, char** args)
     Window win = Window(window, renderer);
 
     PushButton btn1 = PushButton();
-    btn1.setText("Button One");
+    btn1.setText("Long Text Button");
 
     PushButton btn2 = PushButton();
-    btn2.setText("Button Two");
+    btn2.setText("shrt txt btn");
 
     Box box = Box(BoxAxis::Vertical);
     box.addChildView(&btn1);
     box.addChildView(&btn2);
+
+    box.useContentSizeOnAxis = true;
 
     win.setRootView(&box);
 
