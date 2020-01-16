@@ -72,7 +72,7 @@ void Box::m_updateChildrenFrame()
     int freeSpace = boxUnit - inferredSizeTotal;
 
     int unitsPerChild = 0;
-    if (resizeableItems > 0 || freeSpace > 0) {
+    if (resizeableItems > 0 && freeSpace > 0) {
         unitsPerChild = freeSpace / resizeableItems;
     }
     
@@ -80,12 +80,27 @@ void Box::m_updateChildrenFrame()
     for (auto const& child: this->m_childViews)
     {
         Size *inferredSize = child->getInferredSize();
+
+
+
         if (inferredSize != NULL)
         {
-            child->setSize(*inferredSize);
+            if (this->useContentSizeOnAxis)
+            {
+                child->setSize(*inferredSize);
+            }
+            else {
+                if (this->getAxis() == BoxAxis::Horizontal)
+                {
+                    child->setSize(Size(inferredSize->w, this->getFrame().size.h));
+                }
+                else {
+                    child->setSize(Size(this->getFrame().size.w, inferredSize->h));
+                }
+            }
 
-            if (this->getAxis() == BoxAxis::Horizontal) { child->setPosition(Point(this->getFrame().point.x + positionUnits, this->getFrame().point.y)); positionUnits += inferredSize->h; }
-            else { child->setPosition(Point(this->getFrame().point.x, this->getFrame().point.y + positionUnits)); positionUnits += inferredSize->w; }
+            if (this->getAxis() == BoxAxis::Horizontal) { child->setPosition(Point(this->getFrame().point.x + positionUnits, this->getFrame().point.y)); positionUnits += inferredSize->w; }
+            else { child->setPosition(Point(this->getFrame().point.x, this->getFrame().point.y + positionUnits)); positionUnits += inferredSize->h; }
         }
         else {
             if (this->getAxis() == BoxAxis::Horizontal)

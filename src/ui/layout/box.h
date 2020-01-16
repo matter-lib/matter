@@ -43,6 +43,11 @@ public:
 
     void addChildView(View *child);
 
+    /*
+     * Use the width/height given from view's content size on the box's axis, (e.g. should use the width given from a view with a vertical axis and vice versa).
+     */
+    bool useContentSizeOnAxis = false;
+
     virtual void render(SDL_Renderer *context);
     virtual void processEvents(SDL_Event* event);
     virtual void windowSizeChanged();

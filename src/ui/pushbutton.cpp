@@ -28,4 +28,11 @@ PushButton::PushButton() {
 
     this->allowsClick = true;
     this->setText("Button");
+
+    this->inactiveBackgroundColor = Color(196, 196, 196, 255);
+    this->activeBackgroundColor = Color(0, 122, 255, 255);
+    this->disabledBackgroundColor = Color(150, 150, 150, 255);
+    this->inactiveForegroundColor = Color(0, 0, 0, 255);
+    this->activeForegroundColor = Color(255, 255, 255, 255);
+    this->disabledForegroundColor = Color(0, 0, 0, 255);
 }

@@ -42,6 +42,10 @@ public:
     LabelAlignment getVerticalAlignment();
     LabelAlignment getHorizontalAlignment();
 
+    Label();
+
+    virtual Size *contentSize();
+
     void setVerticalAlignment(LabelAlignment alignment);
     void setHorizontalAlignment(LabelAlignment alignment);
 
@@ -62,7 +66,7 @@ private:
     std::string m_text = "Label";
     int m_textSize = 16;
 
-    SDL_Texture *m_textTexture;
+    SDL_Texture *m_textTexture = NULL;
 
     Rect m_calculateLabelRect(Size textureSize);
 };

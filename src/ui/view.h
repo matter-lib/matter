@@ -56,19 +56,19 @@ public:
     bool allowsKeyboard = false;
 
     /// The background color to use when inactive
-    Color inactiveBackgroundColor = Color(196, 196, 196, 255);
+    Color inactiveBackgroundColor = Color(255, 255, 255, 255);
 
     /// The background color to use when active
-    Color activeBackgroundColor = Color(249, 192, 0, 255);
+    Color activeBackgroundColor = Color(255, 255, 255, 255);
 
     /// The background color to use when disabled
-    Color disabledBackgroundColor = Color(150, 150, 150, 255);
+    Color disabledBackgroundColor = Color(255, 255, 255, 255);
 
     /// The foreground color to use when inactive
     Color inactiveForegroundColor = Color(0, 0, 0, 255);
 
     /// The foreground color to use when active
-    Color activeForegroundColor = Color(255, 255, 255, 255);
+    Color activeForegroundColor = Color(0, 0, 0, 255);
 
     /// The foreground color to use when disabled
     Color disabledForegroundColor = Color(0, 0, 0, 255);
